@@ -19,7 +19,7 @@ export default function AdminPage() {
       <Suspense fallback={<p>Carregando…</p>}>
         <CurrentUser />
       </Suspense>
-      <p className="text-zinc-600 dark:text-zinc-400">
+      <p className="text-muted">
         Aqui vai ficar a lista de postagens e o formulário para criar novas.
       </p>
     </main>
