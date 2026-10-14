@@ -24,6 +24,7 @@
   --color-accent-ink: var(--accent-ink);
   --font-sans: var(--font-schibsted);
   --font-mono: var(--font-geist-mono);
+  --font-logo: var(--font-urbanist);
 }
 
 html {

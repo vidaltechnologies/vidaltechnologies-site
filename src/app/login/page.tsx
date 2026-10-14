@@ -1,11 +1,13 @@
 import { Suspense } from "react";
+import { Logo } from "@/components/logo";
 import { login } from "./actions";
 
 export const metadata = { title: "Entrar" };
 
 export default function LoginPage({ searchParams }: PageProps<"/login">) {
   return (
-    <main className="flex flex-1 items-center justify-center px-4">
+    <main className="flex flex-1 flex-col items-center justify-center gap-8 px-4">
+      <Logo className="text-3xl" />
       <form
         action={login}
         className="flex w-full max-w-sm flex-col gap-4 rounded-lg border border-line bg-surface p-6"
