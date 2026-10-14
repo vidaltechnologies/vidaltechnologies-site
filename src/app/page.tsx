@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 
 const services = [
   {
@@ -26,9 +27,8 @@ export default function Home() {
     <>
       <header className="sticky top-0 z-10 border-b border-line/60 bg-background/80 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="text-lg font-semibold tracking-tight">
-            Vidal<span className="text-accent">.</span>
-            <span className="font-normal text-muted"> Technologies</span>
+          <Link href="/" aria-label="vidal labs, início" className="flex items-center text-2xl leading-none">
+            <Logo />
           </Link>
           <nav className="hidden items-center gap-8 text-sm text-muted md:flex">
             <a href="#servicos" className="hover:text-foreground">Serviços</a>
@@ -59,7 +59,7 @@ export default function Home() {
                 Software que trabalha <span className="text-accent">por você</span>.
               </h1>
               <p className="max-w-xl text-lg leading-relaxed text-muted">
-                A Vidal Technologies cria sites, sistemas e automações para empresas que
+                A Vidal Labs cria sites, sistemas e automações para empresas que
                 querem ganhar tempo e crescer com tecnologia.
               </p>
               <div className="flex flex-wrap gap-3">
@@ -137,7 +137,7 @@ export default function Home() {
           <div className="grid gap-8 md:grid-cols-[1fr_2fr]">
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Sobre</h2>
             <p className="text-lg leading-relaxed text-muted">
-              [Texto sobre você e a Vidal Technologies: sua experiência, o que te motiva e
+              [Texto sobre você e a Vidal Labs: sua experiência, o que te motiva e
               os projetos de que mais se orgulha.]
             </p>
           </div>
@@ -167,7 +167,7 @@ export default function Home() {
 
       <footer className="border-t border-line/60">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm text-subtle sm:flex-row sm:justify-between sm:px-6">
-          <p>© Vidal Technologies</p>
+          <Logo className="text-lg text-muted" />
           <p>vidaltechnologies.com.br</p>
         </div>
       </footer>
