@@ -148,7 +148,7 @@ export function Home({ lang }: { lang: Locale }) {
       <footer className="border-t border-line/60">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm text-subtle sm:flex-row sm:justify-between sm:px-6">
           <Logo className="text-lg text-muted" />
-          <p>vidaltechnologies.com.br</p>
+          <p>vidallabs.com.br</p>
         </div>
       </footer>
     </div>

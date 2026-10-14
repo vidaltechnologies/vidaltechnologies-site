@@ -50,7 +50,7 @@ export function LanguageSwitcher({ current }: { current: Locale }) {
             title={dictionaries[lang].languageName}
             aria-label={dictionaries[lang].languageName}
             aria-current={active ? "true" : undefined}
-            className={`block h-5 w-[30px] overflow-hidden rounded-[3px] ring-offset-2 ring-offset-background transition ${
+            className={`block h-4 w-6 overflow-hidden rounded-[3px] ring-offset-2 ring-offset-background transition ${
               active ? "ring-2 ring-accent" : "opacity-60 hover:opacity-100"
             }`}
           >
