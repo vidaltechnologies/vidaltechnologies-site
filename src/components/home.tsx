@@ -121,7 +121,29 @@ export function Home({ lang }: { lang: Locale }) {
         <section id="sobre" className="mx-auto max-w-6xl scroll-mt-16 px-4 py-24 sm:px-6">
           <div className="grid gap-8 md:grid-cols-[1fr_2fr]">
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t.about.title}</h2>
-            <p className="text-lg leading-relaxed text-muted">{t.about.text}</p>
+            <div className="flex flex-col gap-5 text-lg leading-relaxed text-muted">
+              {t.about.paragraphs.map((text) => (
+                <p key={text}>{text}</p>
+              ))}
+              <p>{t.about.focusIntro}</p>
+              <ul className="flex flex-col gap-3 border-l-2 border-accent/60 pl-5">
+                {t.about.focus.map((item) => (
+                  <li key={item.title}>
+                    <strong className="font-semibold text-foreground">{item.title}:</strong>{" "}
+                    {item.text}
+                  </li>
+                ))}
+              </ul>
+              {t.about.closing.map((text) => (
+                <p key={text}>{text}</p>
+              ))}
+              <a
+                href="#contato"
+                className="font-semibold text-accent underline-offset-4 hover:underline"
+              >
+                {t.about.cta}
+              </a>
+            </div>
           </div>
         </section>
 
