@@ -102,6 +102,8 @@ const pt = {
     title: "Tem um projeto em mente?",
     text: "Conte o que você precisa e eu respondo com os próximos passos.",
     button: "Enviar e-mail",
+    whatsapp: "Falar no WhatsApp",
+    whatsappMessage: "Olá! Vim pelo site da Vidal Labs e gostaria de conversar sobre um projeto.",
   },
   switcherLabel: "Idioma",
 };
@@ -196,6 +198,8 @@ const en: Dictionary = {
     title: "Have a project in mind?",
     text: "Tell me what you need and I will reply with the next steps.",
     button: "Send an e-mail",
+    whatsapp: "Chat on WhatsApp",
+    whatsappMessage: "Hi! I found the Vidal Labs website and would like to talk about a project.",
   },
   switcherLabel: "Language",
 };
@@ -288,6 +292,8 @@ const es: Dictionary = {
     title: "¿Tienes un proyecto en mente?",
     text: "Cuéntame lo que necesitas y te respondo con los próximos pasos.",
     button: "Enviar e-mail",
+    whatsapp: "Hablar por WhatsApp",
+    whatsappMessage: "¡Hola! Vi el sitio de Vidal Labs y me gustaría hablar sobre un proyecto.",
   },
   switcherLabel: "Idioma",
 };
