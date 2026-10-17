@@ -62,13 +62,13 @@ const pt = {
         ],
       },
       {
-        title: "Automação e IA",
+        title: "Automação e Agentes de IA",
         text: "Fluxos e assistentes que fazem o trabalho repetitivo por você.",
         examples: [
           "Fluxos automatizados com n8n",
           "Atendimento com IA no WhatsApp",
           "Agentes de IA que consultam seus documentos",
-          "Integração entre sistemas e APIs",
+          "Integração com sistemas externos e internos da sua empresa",
         ],
       },
     ],
@@ -180,13 +180,13 @@ const en: Dictionary = {
         ],
       },
       {
-        title: "Automation and AI",
+        title: "Automation and AI Agents",
         text: "Workflows and assistants that do the repetitive work for you.",
         examples: [
           "Automated workflows with n8n",
           "AI customer service on WhatsApp",
           "AI agents that search your documents",
-          "Integrations between systems and APIs",
+          "Integrations with external tools and your own internal systems",
         ],
       },
     ],
@@ -296,13 +296,13 @@ const es: Dictionary = {
         ],
       },
       {
-        title: "Automatización e IA",
+        title: "Automatización y Agentes de IA",
         text: "Flujos y asistentes que hacen el trabajo repetitivo por ti.",
         examples: [
           "Flujos automatizados con n8n",
           "Atención con IA en WhatsApp",
           "Agentes de IA que consultan tus documentos",
-          "Integración entre sistemas y APIs",
+          "Integración con sistemas externos e internos de tu empresa",
         ],
       },
     ],
