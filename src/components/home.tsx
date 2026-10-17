@@ -119,18 +119,6 @@ export function Home({ lang }: { lang: Locale }) {
               {t.about.paragraphs.map((text) => (
                 <p key={text}>{text}</p>
               ))}
-              <p>{t.about.focusIntro}</p>
-              <ul className="flex flex-col gap-3 border-l-2 border-accent/60 pl-5">
-                {t.about.focus.map((item) => (
-                  <li key={item.title}>
-                    <strong className="font-semibold text-foreground">{item.title}:</strong>{" "}
-                    {item.text}
-                  </li>
-                ))}
-              </ul>
-              {t.about.closing.map((text) => (
-                <p key={text}>{text}</p>
-              ))}
               <a
                 href="#contato"
                 className="font-semibold text-accent underline-offset-4 hover:underline"
