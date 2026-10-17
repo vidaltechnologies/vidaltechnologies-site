@@ -12,7 +12,7 @@ export function Home({ lang }: { lang: Locale }) {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <Link
             href={localePath(lang)}
-            aria-label="vidal labs"
+            aria-label="vidal technologies"
             className="flex items-center text-2xl leading-none"
           >
             <Logo />
