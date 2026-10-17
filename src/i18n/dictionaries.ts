@@ -16,7 +16,7 @@ export const htmlLang: Record<Locale, string> = {
 
 const pt = {
   languageName: "Português",
-  nav: { services: "Serviços", process: "Como trabalhamos", about: "Sobre" },
+  nav: { services: "Serviços", process: "Como trabalhamos", projects: "Projetos", about: "Sobre" },
   cta: "Fale comigo",
   hero: {
     eyebrow: "Tecnologia sob medida",
@@ -91,6 +91,33 @@ const pt = {
       },
     ],
   },
+  projects: {
+    title: "Projetos",
+    text: "Alguns exemplos do que construímos. O código de vários projetos está no GitHub.",
+    button: "Ver no GitHub",
+    items: [
+      {
+        title: "Site institucional multilíngue",
+        text: "Site rápido em português, inglês e espanhol, com fluxo animado e contato por WhatsApp.",
+        tags: ["Next.js", "TypeScript", "Tailwind"],
+      },
+      {
+        title: "Agente de atendimento no WhatsApp",
+        text: "Agente de IA que responde clientes, qualifica pedidos e registra tudo no CRM.",
+        tags: ["n8n", "LLM", "WhatsApp"],
+      },
+      {
+        title: "Assistente com base de conhecimento",
+        text: "Assistente que responde perguntas usando os documentos internos da empresa.",
+        tags: ["Python", "RAG", "LLM"],
+      },
+      {
+        title: "Relatórios automáticos",
+        text: "Fluxo que junta dados de vários sistemas e envia relatórios prontos toda semana.",
+        tags: ["n8n", "APIs", "Google Sheets"],
+      },
+    ],
+  },
   about: {
     title: "Sobre",
     paragraphs: [
@@ -115,7 +142,7 @@ export type Dictionary = typeof pt;
 
 const en: Dictionary = {
   languageName: "English",
-  nav: { services: "Services", process: "How we work", about: "About" },
+  nav: { services: "Services", process: "How we work", projects: "Projects", about: "About" },
   cta: "Get in touch",
   hero: {
     eyebrow: "Tailor-made technology",
@@ -190,6 +217,33 @@ const en: Dictionary = {
       },
     ],
   },
+  projects: {
+    title: "Projects",
+    text: "A few examples of what we build. The code for several projects is on GitHub.",
+    button: "See on GitHub",
+    items: [
+      {
+        title: "Multilingual company website",
+        text: "Fast website in Portuguese, English and Spanish, with an animated flow and WhatsApp contact.",
+        tags: ["Next.js", "TypeScript", "Tailwind"],
+      },
+      {
+        title: "WhatsApp support agent",
+        text: "AI agent that answers customers, qualifies requests and logs everything in the CRM.",
+        tags: ["n8n", "LLM", "WhatsApp"],
+      },
+      {
+        title: "Knowledge base assistant",
+        text: "Assistant that answers questions using the company's internal documents.",
+        tags: ["Python", "RAG", "LLM"],
+      },
+      {
+        title: "Automated reports",
+        text: "Workflow that gathers data from several systems and sends ready-made reports every week.",
+        tags: ["n8n", "APIs", "Google Sheets"],
+      },
+    ],
+  },
   about: {
     title: "About",
     paragraphs: [
@@ -212,7 +266,7 @@ const en: Dictionary = {
 
 const es: Dictionary = {
   languageName: "Español",
-  nav: { services: "Servicios", process: "Cómo trabajamos", about: "Sobre mí" },
+  nav: { services: "Servicios", process: "Cómo trabajamos", projects: "Proyectos", about: "Sobre nosotros" },
   cta: "Contáctame",
   hero: {
     eyebrow: "Tecnología a medida",
@@ -287,8 +341,35 @@ const es: Dictionary = {
       },
     ],
   },
+  projects: {
+    title: "Proyectos",
+    text: "Algunos ejemplos de lo que construimos. El código de varios proyectos está en GitHub.",
+    button: "Ver en GitHub",
+    items: [
+      {
+        title: "Sitio institucional multilingüe",
+        text: "Sitio rápido en portugués, inglés y español, con flujo animado y contacto por WhatsApp.",
+        tags: ["Next.js", "TypeScript", "Tailwind"],
+      },
+      {
+        title: "Agente de atención en WhatsApp",
+        text: "Agente de IA que responde a clientes, califica pedidos y registra todo en el CRM.",
+        tags: ["n8n", "LLM", "WhatsApp"],
+      },
+      {
+        title: "Asistente con base de conocimiento",
+        text: "Asistente que responde preguntas usando los documentos internos de la empresa.",
+        tags: ["Python", "RAG", "LLM"],
+      },
+      {
+        title: "Informes automáticos",
+        text: "Flujo que reúne datos de varios sistemas y envía informes listos cada semana.",
+        tags: ["n8n", "APIs", "Google Sheets"],
+      },
+    ],
+  },
   about: {
-    title: "Sobre mí",
+    title: "Sobre nosotros",
     paragraphs: [
       "Vidal Technologies desarrolla soluciones tecnológicas que combinan Inteligencia Artificial, automatización de procesos e integración de sistemas para ayudar a las empresas a trabajar de forma más eficiente.",
       "Nuestro trabajo abarca el desarrollo de agentes de IA, aplicaciones con LLMs, soluciones RAG, automatización de workflows, integración mediante APIs y desarrollo de aplicaciones a medida.",
