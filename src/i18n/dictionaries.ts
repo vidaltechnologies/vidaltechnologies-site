@@ -99,7 +99,6 @@ const pt = {
       "Unimos arquitetura de software, conhecimento técnico e visão de negócio para criar soluções práticas, adaptadas às necessidades de cada operação.",
       "Nosso objetivo é transformar processos complexos em fluxos de trabalho mais simples, reduzir atividades manuais e utilizar a tecnologia para gerar resultados concretos.",
     ],
-    cta: "Vamos conversar sobre como a Inteligência Artificial pode contribuir para o seu projeto?",
   },
   contact: {
     title: "Tem um projeto em mente?",
@@ -199,7 +198,6 @@ const en: Dictionary = {
       "We bring together software architecture, technical expertise and business vision to create practical solutions, tailored to the needs of each operation.",
       "Our goal is to turn complex processes into simpler workflows, reduce manual work and use technology to deliver concrete results.",
     ],
-    cta: "Shall we talk about how Artificial Intelligence can help your project?",
   },
   contact: {
     title: "Have a project in mind?",
@@ -297,7 +295,6 @@ const es: Dictionary = {
       "Unimos arquitectura de software, conocimiento técnico y visión de negocio para crear soluciones prácticas, adaptadas a las necesidades de cada operación.",
       "Nuestro objetivo es transformar procesos complejos en flujos de trabajo más simples, reducir las tareas manuales y utilizar la tecnología para generar resultados concretos.",
     ],
-    cta: "¿Hablamos sobre cómo la Inteligencia Artificial puede contribuir a tu proyecto?",
   },
   contact: {
     title: "¿Tienes un proyecto en mente?",

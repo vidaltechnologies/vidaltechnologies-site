@@ -119,12 +119,6 @@ export function Home({ lang }: { lang: Locale }) {
               {t.about.paragraphs.map((text) => (
                 <p key={text}>{text}</p>
               ))}
-              <a
-                href="#contato"
-                className="font-semibold text-accent underline-offset-4 hover:underline"
-              >
-                {t.about.cta}
-              </a>
             </div>
           </div>
         </section>
