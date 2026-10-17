@@ -22,33 +22,54 @@ const pt = {
     eyebrow: "Tecnologia sob medida",
     titleStart: "Software que trabalha",
     titleAccent: "por você",
-    text: "A Vidal Labs cria sites, sistemas e automações para empresas que querem ganhar tempo e crescer com tecnologia.",
+    text: "A Vidal Technologies cria sites, sistemas e automações para empresas que querem ganhar tempo e crescer com tecnologia.",
     primary: "Começar um projeto",
     secondary: "Ver serviços",
   },
-  code: {
-    comment: "// seu próximo projeto",
-    name: "projeto",
-    fields: [
-      ["prazo", "combinado"],
-      ["código", "seu"],
-      ["resultado", "no ar"],
-    ],
+  flow: {
+    name: "novo-lead",
+    status: "executando",
+    footer: "Roda sozinho a cada novo contato",
+    nodes: {
+      trigger: "Novo lead",
+      ai: "IA classifica",
+      check: "Qualificado?",
+      whatsapp: "WhatsApp",
+      crm: "CRM",
+    },
   },
   services: {
     title: "Serviços",
     items: [
       {
-        title: "Sites e sistemas web",
-        text: "Sites institucionais, painéis e aplicações sob medida, rápidos e fáceis de manter.",
+        title: "Sites",
+        text: "Sites rápidos, bonitos e fáceis de atualizar, que passam confiança para o seu cliente.",
+        examples: [
+          "Site institucional para a sua marca",
+          "Site para profissionais e PJ",
+          "Landing pages para campanhas",
+          "Blog e portfólio",
+        ],
+      },
+      {
+        title: "Aplicações web",
+        text: "Sistemas sob medida que organizam o dia a dia da sua empresa.",
+        examples: [
+          "Sistemas de gestão para empresas",
+          "Dashboards para análise de dados",
+          "Portal do cliente e áreas restritas",
+          "Agendamentos, orçamentos e cadastros",
+        ],
       },
       {
         title: "Automação e IA",
-        text: "Integrações e assistentes que tiram tarefas repetitivas do caminho da sua equipe.",
-      },
-      {
-        title: "Consultoria técnica",
-        text: "Ajuda para escolher tecnologias, revisar projetos e planejar o próximo passo.",
+        text: "Fluxos e assistentes que fazem o trabalho repetitivo por você.",
+        examples: [
+          "Fluxos automatizados com n8n",
+          "Atendimento com IA no WhatsApp",
+          "Agentes de IA que consultam seus documentos",
+          "Integração entre sistemas e APIs",
+        ],
       },
     ],
   },
@@ -103,9 +124,10 @@ const pt = {
     text: "Conte o que você precisa e eu respondo com os próximos passos.",
     button: "Enviar e-mail",
     whatsapp: "Falar no WhatsApp",
-    whatsappMessage: "Olá! Vim pelo site da Vidal Labs e gostaria de conversar sobre um projeto.",
+    whatsappMessage: "Olá! Vim pelo site da Vidal Technologies e gostaria de conversar sobre um projeto.",
   },
   switcherLabel: "Idioma",
+  rights: "Todos os direitos reservados.",
 };
 
 export type Dictionary = typeof pt;
@@ -118,33 +140,54 @@ const en: Dictionary = {
     eyebrow: "Tailor-made technology",
     titleStart: "Software that works",
     titleAccent: "for you",
-    text: "Vidal Labs builds websites, systems and automations for companies that want to save time and grow with technology.",
+    text: "Vidal Technologies builds websites, systems and automations for companies that want to save time and grow with technology.",
     primary: "Start a project",
     secondary: "See services",
   },
-  code: {
-    comment: "// your next project",
-    name: "project",
-    fields: [
-      ["deadline", "agreed"],
-      ["code", "yours"],
-      ["result", "live"],
-    ],
+  flow: {
+    name: "new-lead",
+    status: "running",
+    footer: "Runs on its own for every new contact",
+    nodes: {
+      trigger: "New lead",
+      ai: "AI classifies",
+      check: "Qualified?",
+      whatsapp: "WhatsApp",
+      crm: "CRM",
+    },
   },
   services: {
     title: "Services",
     items: [
       {
-        title: "Websites and web apps",
-        text: "Company websites, dashboards and custom applications that are fast and easy to maintain.",
+        title: "Websites",
+        text: "Fast, good-looking websites that are easy to update and earn your customers' trust.",
+        examples: [
+          "Company website for your brand",
+          "Website for professionals and freelancers",
+          "Landing pages for campaigns",
+          "Blog and portfolio",
+        ],
+      },
+      {
+        title: "Web applications",
+        text: "Custom systems that organize your company's day-to-day work.",
+        examples: [
+          "Management systems for companies",
+          "Data analysis dashboards",
+          "Customer portals and members areas",
+          "Scheduling, quotes and sign-ups",
+        ],
       },
       {
         title: "Automation and AI",
-        text: "Integrations and assistants that take repetitive tasks off your team's plate.",
-      },
-      {
-        title: "Technical consulting",
-        text: "Help choosing technologies, reviewing projects and planning the next step.",
+        text: "Workflows and assistants that do the repetitive work for you.",
+        examples: [
+          "Automated workflows with n8n",
+          "AI customer service on WhatsApp",
+          "AI agents that search your documents",
+          "Integrations between systems and APIs",
+        ],
       },
     ],
   },
@@ -199,9 +242,10 @@ const en: Dictionary = {
     text: "Tell me what you need and I will reply with the next steps.",
     button: "Send an e-mail",
     whatsapp: "Chat on WhatsApp",
-    whatsappMessage: "Hi! I found the Vidal Labs website and would like to talk about a project.",
+    whatsappMessage: "Hi! I found the Vidal Technologies website and would like to talk about a project.",
   },
   switcherLabel: "Language",
+  rights: "All rights reserved.",
 };
 
 const es: Dictionary = {
@@ -212,33 +256,54 @@ const es: Dictionary = {
     eyebrow: "Tecnología a medida",
     titleStart: "Software que trabaja",
     titleAccent: "por ti",
-    text: "Vidal Labs crea sitios web, sistemas y automatizaciones para empresas que quieren ganar tiempo y crecer con tecnología.",
+    text: "Vidal Technologies crea sitios web, sistemas y automatizaciones para empresas que quieren ganar tiempo y crecer con tecnología.",
     primary: "Empezar un proyecto",
     secondary: "Ver servicios",
   },
-  code: {
-    comment: "// tu próximo proyecto",
-    name: "proyecto",
-    fields: [
-      ["plazo", "acordado"],
-      ["código", "tuyo"],
-      ["resultado", "en línea"],
-    ],
+  flow: {
+    name: "nuevo-lead",
+    status: "ejecutando",
+    footer: "Se ejecuta solo con cada nuevo contacto",
+    nodes: {
+      trigger: "Nuevo lead",
+      ai: "IA clasifica",
+      check: "¿Calificado?",
+      whatsapp: "WhatsApp",
+      crm: "CRM",
+    },
   },
   services: {
     title: "Servicios",
     items: [
       {
-        title: "Sitios y sistemas web",
-        text: "Sitios corporativos, paneles y aplicaciones a medida, rápidos y fáciles de mantener.",
+        title: "Sitios web",
+        text: "Sitios rápidos, atractivos y fáciles de actualizar, que generan confianza en tus clientes.",
+        examples: [
+          "Sitio corporativo para tu marca",
+          "Sitio para profesionales e independientes",
+          "Landing pages para campañas",
+          "Blog y portafolio",
+        ],
+      },
+      {
+        title: "Aplicaciones web",
+        text: "Sistemas a medida que organizan el día a día de tu empresa.",
+        examples: [
+          "Sistemas de gestión para empresas",
+          "Dashboards para análisis de datos",
+          "Portal de clientes y áreas privadas",
+          "Agendas, presupuestos y registros",
+        ],
       },
       {
         title: "Automatización e IA",
-        text: "Integraciones y asistentes que quitan las tareas repetitivas del camino de tu equipo.",
-      },
-      {
-        title: "Consultoría técnica",
-        text: "Ayuda para elegir tecnologías, revisar proyectos y planificar el siguiente paso.",
+        text: "Flujos y asistentes que hacen el trabajo repetitivo por ti.",
+        examples: [
+          "Flujos automatizados con n8n",
+          "Atención con IA en WhatsApp",
+          "Agentes de IA que consultan tus documentos",
+          "Integración entre sistemas y APIs",
+        ],
       },
     ],
   },
@@ -293,9 +358,10 @@ const es: Dictionary = {
     text: "Cuéntame lo que necesitas y te respondo con los próximos pasos.",
     button: "Enviar e-mail",
     whatsapp: "Hablar por WhatsApp",
-    whatsappMessage: "¡Hola! Vi el sitio de Vidal Labs y me gustaría hablar sobre un proyecto.",
+    whatsappMessage: "¡Hola! Vi el sitio de Vidal Technologies y me gustaría hablar sobre un proyecto.",
   },
   switcherLabel: "Idioma",
+  rights: "Todos los derechos reservados.",
 };
 
 export const dictionaries: Record<Locale, Dictionary> = { pt, en, es };

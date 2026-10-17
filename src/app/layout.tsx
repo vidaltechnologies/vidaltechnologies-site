@@ -20,10 +20,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Vidal Labs",
-    template: "%s | Vidal Labs",
+    default: "Vidal Technologies",
+    template: "%s | Vidal Technologies",
   },
-  description: "[Descrição da Vidal Labs]",
+  description: "Sites, aplicações web, automação e inteligência artificial para empresas.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
