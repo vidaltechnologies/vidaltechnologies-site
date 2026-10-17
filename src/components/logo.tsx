@@ -1,5 +1,5 @@
-// Marca "vidal labs": o V dourado desenhado em SVG (fica nítido em qualquer
-// tamanho) e o nome em texto, com "vidal" forte e "labs" fino.
+// Marca "vidal technologies": o V dourado desenhado em SVG (fica nítido em
+// qualquer tamanho) e o nome em texto, com "vidal" forte e "technologies" fino.
 
 export function LogoMark({ className }: { className?: string }) {
   return (
@@ -16,7 +16,7 @@ export function Logo({ className = "" }: { className?: string }) {
       <LogoMark className="h-[0.9em] w-auto text-accent" />
       <span className="font-logo leading-none tracking-tight">
         <span className="font-extrabold">vidal</span>
-        <span className="font-light"> labs</span>
+        <span className="font-light"> technologies</span>
       </span>
     </span>
   );
