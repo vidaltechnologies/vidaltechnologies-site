@@ -32,7 +32,7 @@ const pt = {
     footer: "Roda sozinho a cada novo contato",
     nodes: {
       trigger: "Novo lead",
-      ai: "IA classifica",
+      ai: "IA vidal technologies\nclassifica",
       check: "Qualificado?",
       whatsapp: "WhatsApp",
       crm: "CRM",
@@ -160,7 +160,7 @@ const en: Dictionary = {
     footer: "Runs on its own for every new contact",
     nodes: {
       trigger: "New lead",
-      ai: "AI classifies",
+      ai: "vidal technologies AI\nclassifies",
       check: "Qualified?",
       whatsapp: "WhatsApp",
       crm: "CRM",
@@ -286,7 +286,7 @@ const es: Dictionary = {
     footer: "Se ejecuta solo con cada nuevo contacto",
     nodes: {
       trigger: "Nuevo lead",
-      ai: "IA clasifica",
+      ai: "IA vidal technologies\nclasifica",
       check: "¿Calificado?",
       whatsapp: "WhatsApp",
       crm: "CRM",

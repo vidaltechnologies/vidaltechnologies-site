@@ -1,9 +1,11 @@
+import type { SVGProps } from "react";
+
 // Marca "vidal technologies": o V dourado desenhado em SVG (fica nítido em
 // qualquer tamanho) e o nome em texto, com "vidal" forte e "technologies" fino.
 
-export function LogoMark({ className }: { className?: string }) {
+export function LogoMark(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 318 221" aria-hidden className={className}>
+    <svg viewBox="0 0 318 221" aria-hidden {...props}>
       <path d="M0 0H86L184 165L138 221Z" fill="currentColor" />
       <path d="M231 0H318L200 145L167 89Z" fill="currentColor" />
     </svg>

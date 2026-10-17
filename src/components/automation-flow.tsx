@@ -1,4 +1,6 @@
 import type { Dictionary } from "@/i18n/dictionaries";
+import { LogoMark } from "@/components/logo";
+import { WhatsAppIcon } from "@/components/whatsapp-icon";
 
 // Fluxo de automação no estilo n8n, em loop: cada etapa acende na sua vez,
 // pontos percorrem as ligações e as etapas concluídas ganham um check verde.
@@ -50,7 +52,7 @@ const after = (end: number) => ({
   keyTimes: `0;${end};${end + 0.01};0.97;1`,
 });
 
-function Icon({ name }: { name: StepKey }) {
+function Icon({ name }: { name: Exclude<StepKey, "ai" | "whatsapp"> }) {
   const common = {
     fill: "none",
     stroke: "currentColor",
@@ -61,17 +63,8 @@ function Icon({ name }: { name: StepKey }) {
   switch (name) {
     case "trigger":
       return <path d="M14 3 6 14h6l-2 7 8-11h-6l2-7Z" {...common} />;
-    case "ai":
-      return (
-        <path
-          d="M12 3v3M12 18v3M3 12h3M18 12h3M12 8l1.5 2.5L16 12l-2.5 1.5L12 16l-1.5-2.5L8 12l2.5-1.5Z"
-          {...common}
-        />
-      );
     case "check":
       return <path d="M4 12h6l4-6h6M10 12l4 6h6" {...common} />;
-    case "whatsapp":
-      return <path d="M4 20l1.3-3.9A8 8 0 1 1 8 19Z" {...common} />;
     case "crm":
       return <path d="M4 5h16v14H4ZM4 10h16M4 15h16M10 5v14" {...common} />;
   }
@@ -98,7 +91,7 @@ export function AutomationFlow({ t }: { t: Dictionary["flow"] }) {
       <svg
         viewBox="0 0 416 270"
         role="img"
-        aria-label={Object.values(t.nodes).join(" → ")}
+        aria-label={Object.values(t.nodes).join(" → ").replaceAll("\n", " ")}
         className="w-full"
       >
         <defs>
@@ -159,16 +152,24 @@ export function AutomationFlow({ t }: { t: Dictionary["flow"] }) {
                   {...during(start, end, LINE, ACCENT)}
                 />
               </rect>
-              <svg
-                x={x + 16}
-                y={y + 16}
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="text-foreground"
-              >
-                <Icon name={key} />
-              </svg>
+              {key === "ai" ? (
+                // A IA do fluxo é a da Vidal Technologies: o V da marca.
+                <LogoMark x={x + 12} y={y + 18} width="32" height="22" className="text-accent" />
+              ) : key === "whatsapp" ? (
+                // Como no n8n, nós de apps mostram o logo do próprio app.
+                <WhatsAppIcon x={x + 14} y={y + 14} width="28" height="28" className="fill-[#25D366]" />
+              ) : (
+                <svg
+                  x={x + 16}
+                  y={y + 16}
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  className="text-foreground"
+                >
+                  <Icon name={key} />
+                </svg>
+              )}
               <g opacity="0">
                 <circle cx={x + NODE - 2} cy={y + 2} r="8" fill="#3ddc84" />
                 <path
@@ -188,7 +189,11 @@ export function AutomationFlow({ t }: { t: Dictionary["flow"] }) {
                 fill="var(--muted)"
                 fontSize="12"
               >
-                {t.nodes[key]}
+                {t.nodes[key].split("\n").map((line, i) => (
+                  <tspan key={line} x={x + NODE / 2} dy={i === 0 ? 0 : 15}>
+                    {line}
+                  </tspan>
+                ))}
               </text>
             </g>
           );
