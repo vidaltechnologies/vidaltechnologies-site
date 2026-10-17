@@ -16,7 +16,7 @@ export const htmlLang: Record<Locale, string> = {
 
 const pt = {
   languageName: "Português",
-  nav: { services: "Serviços", process: "Como trabalho", about: "Sobre" },
+  nav: { services: "Serviços", process: "Como trabalhamos", about: "Sobre" },
   cta: "Fale comigo",
   hero: {
     eyebrow: "Tecnologia sob medida",
@@ -68,21 +68,27 @@ const pt = {
           "Automação de tarefas manuais e repetitivas",
           "Agentes de IA que executam e analisam tarefas",
           "Workflows personalizados com n8n",
-          "Integração de sistemas, APIs e bancos de dados",
-          "Assistentes com LLM e RAG que consultam seus documentos",
           "Automação de documentos, relatórios e gestão de projetos",
           "Monitoramento e melhoria contínua das automações",
-          "Consultoria e aplicações sob medida com IA",
         ],
       },
     ],
   },
   process: {
-    title: "Como trabalho",
+    title: "Como trabalhamos",
     steps: [
-      { title: "Conversa", text: "Entendemos o problema e o que você precisa resolver." },
-      { title: "Proposta", text: "Escopo, prazo e investimento claros antes de começar." },
-      { title: "Entrega", text: "Versões frequentes para você acompanhar e ajustar." },
+      {
+        title: "Conversa",
+        text: "Começamos com uma conversa sem compromisso para entender o seu negócio, o problema que você quer resolver e o resultado que espera. Olhamos seus processos e as ferramentas que você já usa para descobrir onde a tecnologia gera mais impacto.",
+      },
+      {
+        title: "Proposta",
+        text: "Com base nessa conversa, você recebe uma proposta clara com escopo, etapas, prazos e investimento. Antes de qualquer trabalho começar, você já sabe exatamente o que será entregue, quando e quanto vai custar.",
+      },
+      {
+        title: "Entrega",
+        text: "O desenvolvimento acontece em ciclos curtos, com versões frequentes para você testar e dar sua opinião. Depois de colocar no ar, acompanhamos o funcionamento, fazemos ajustes e damos suporte para a solução continuar evoluindo.",
+      },
     ],
   },
   about: {
@@ -138,7 +144,7 @@ export type Dictionary = typeof pt;
 
 const en: Dictionary = {
   languageName: "English",
-  nav: { services: "Services", process: "How I work", about: "About" },
+  nav: { services: "Services", process: "How we work", about: "About" },
   cta: "Get in touch",
   hero: {
     eyebrow: "Tailor-made technology",
@@ -190,21 +196,27 @@ const en: Dictionary = {
           "Automation of manual, repetitive tasks",
           "AI agents that carry out and analyze tasks",
           "Custom workflows with n8n",
-          "Integration of systems, APIs and databases",
-          "LLM and RAG assistants that search your documents",
           "Automated documents, reports and project tracking",
           "Monitoring and continuous improvement of automations",
-          "Consulting and custom AI applications",
         ],
       },
     ],
   },
   process: {
-    title: "How I work",
+    title: "How we work",
     steps: [
-      { title: "Conversation", text: "We understand the problem and what you need to solve." },
-      { title: "Proposal", text: "Clear scope, timeline and investment before we start." },
-      { title: "Delivery", text: "Frequent releases so you can follow along and adjust." },
+      {
+        title: "Conversation",
+        text: "We start with a no-commitment conversation to understand your business, the problem you want to solve and the result you expect. We look at your processes and the tools you already use to find where technology will have the most impact.",
+      },
+      {
+        title: "Proposal",
+        text: "Based on that conversation, you get a clear proposal with scope, stages, timeline and investment. Before any work begins, you know exactly what will be delivered, when, and how much it will cost.",
+      },
+      {
+        title: "Delivery",
+        text: "Development happens in short cycles, with frequent releases for you to try and give feedback on. After launch, we monitor how it runs, make adjustments and provide support so the solution keeps improving.",
+      },
     ],
   },
   about: {
@@ -258,7 +270,7 @@ const en: Dictionary = {
 
 const es: Dictionary = {
   languageName: "Español",
-  nav: { services: "Servicios", process: "Cómo trabajo", about: "Sobre mí" },
+  nav: { services: "Servicios", process: "Cómo trabajamos", about: "Sobre mí" },
   cta: "Contáctame",
   hero: {
     eyebrow: "Tecnología a medida",
@@ -310,21 +322,27 @@ const es: Dictionary = {
           "Automatización de tareas manuales y repetitivas",
           "Agentes de IA que ejecutan y analizan tareas",
           "Workflows personalizados con n8n",
-          "Integración de sistemas, APIs y bases de datos",
-          "Asistentes con LLM y RAG que consultan tus documentos",
           "Automatización de documentos, informes y gestión de proyectos",
           "Monitoreo y mejora continua de las automatizaciones",
-          "Consultoría y aplicaciones a medida con IA",
         ],
       },
     ],
   },
   process: {
-    title: "Cómo trabajo",
+    title: "Cómo trabajamos",
     steps: [
-      { title: "Conversación", text: "Entendemos el problema y lo que necesitas resolver." },
-      { title: "Propuesta", text: "Alcance, plazo e inversión claros antes de empezar." },
-      { title: "Entrega", text: "Versiones frecuentes para que puedas seguir y ajustar." },
+      {
+        title: "Conversación",
+        text: "Empezamos con una conversación sin compromiso para entender tu negocio, el problema que quieres resolver y el resultado que esperas. Analizamos tus procesos y las herramientas que ya usas para descubrir dónde la tecnología genera más impacto.",
+      },
+      {
+        title: "Propuesta",
+        text: "A partir de esa conversación, recibes una propuesta clara con alcance, etapas, plazos e inversión. Antes de empezar cualquier trabajo, ya sabes exactamente qué se entregará, cuándo y cuánto costará.",
+      },
+      {
+        title: "Entrega",
+        text: "El desarrollo se hace en ciclos cortos, con versiones frecuentes para que pruebes y des tu opinión. Después del lanzamiento, seguimos su funcionamiento, hacemos ajustes y damos soporte para que la solución siga evolucionando.",
+      },
     ],
   },
   about: {
