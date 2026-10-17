@@ -5,6 +5,9 @@ import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { dictionaries, htmlLang, localePath, type Locale } from "@/i18n/dictionaries";
 
+// Link do botão "Ver no GitHub" da seção Projetos.
+const GITHUB_URL = "https://github.com/thiagovidalpassos";
+
 export function Home({ lang }: { lang: Locale }) {
   const t = dictionaries[lang];
 
@@ -22,6 +25,7 @@ export function Home({ lang }: { lang: Locale }) {
           <nav className="hidden items-center gap-8 text-sm text-muted md:flex">
             <a href="#servicos" className="hover:text-foreground">{t.nav.services}</a>
             <a href="#como-trabalho" className="hover:text-foreground">{t.nav.process}</a>
+            <a href="#projetos" className="hover:text-foreground">{t.nav.projects}</a>
             <a href="#sobre" className="hover:text-foreground">{t.nav.about}</a>
           </nav>
           <div className="flex items-center gap-5">
@@ -109,6 +113,44 @@ export function Home({ lang }: { lang: Locale }) {
                 </li>
               ))}
             </ol>
+          </div>
+        </section>
+
+        <section id="projetos" className="mx-auto max-w-6xl scroll-mt-16 px-4 py-24 sm:px-6">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div className="flex max-w-2xl flex-col gap-3">
+              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t.projects.title}</h2>
+              <p className="text-lg leading-relaxed text-muted">{t.projects.text}</p>
+            </div>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-accent px-6 py-3 font-semibold text-accent-ink transition hover:brightness-110"
+            >
+              {t.projects.button}
+            </a>
+          </div>
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {t.projects.items.map((p) => (
+              <article
+                key={p.title}
+                className="flex flex-col gap-3 rounded-2xl border border-line/60 bg-surface-2 p-6 transition hover:border-accent/60"
+              >
+                <h3 className="text-xl font-semibold">{p.title}</h3>
+                <p className="leading-relaxed text-muted">{p.text}</p>
+                <ul className="mt-auto flex flex-wrap gap-2 pt-2">
+                  {p.tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="rounded-full border border-line px-3 py-1 font-mono text-xs text-accent"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
           </div>
         </section>
 
