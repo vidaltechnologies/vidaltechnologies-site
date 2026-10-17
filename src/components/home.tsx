@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AutomationFlow } from "@/components/automation-flow";
 import { Logo } from "@/components/logo";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { dictionaries, htmlLang, localePath, type Locale } from "@/i18n/dictionaries";
@@ -65,23 +66,7 @@ export function Home({ lang }: { lang: Locale }) {
               </div>
             </div>
 
-            <div className="self-end rounded-2xl border border-line bg-surface p-6 font-mono text-sm leading-7">
-              <div className="mb-4 flex gap-1.5" aria-hidden>
-                <span className="h-2.5 w-2.5 rounded-full bg-line" />
-                <span className="h-2.5 w-2.5 rounded-full bg-line" />
-                <span className="h-2.5 w-2.5 rounded-full bg-accent" />
-              </div>
-              <p className="text-subtle">{t.code.comment}</p>
-              <p>
-                <span className="text-accent">const</span> {t.code.name} = {"{"}
-              </p>
-              {t.code.fields.map(([key, value]) => (
-                <p key={key} className="pl-4">
-                  {key}: <span className="text-muted">&quot;{value}&quot;</span>,
-                </p>
-              ))}
-              <p>{"};"}</p>
-            </div>
+            <AutomationFlow t={t.flow} />
           </div>
           <div className="h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
         </section>
@@ -96,6 +81,14 @@ export function Home({ lang }: { lang: Locale }) {
               >
                 <h3 className="text-xl font-semibold text-accent">{s.title}</h3>
                 <p className="leading-relaxed text-muted">{s.text}</p>
+                <ul className="mt-2 flex flex-col gap-2 text-sm text-foreground">
+                  {s.examples.map((example) => (
+                    <li key={example} className="flex gap-2.5">
+                      <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                      {example}
+                    </li>
+                  ))}
+                </ul>
               </article>
             ))}
           </div>
@@ -181,7 +174,7 @@ export function Home({ lang }: { lang: Locale }) {
       <footer className="border-t border-line/60">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm text-subtle sm:flex-row sm:justify-between sm:px-6">
           <Logo className="text-lg text-muted" />
-          <p>vidallabs.com.br</p>
+          <p>© Vidal Technologies. {t.rights}</p>
         </div>
       </footer>
     </div>
