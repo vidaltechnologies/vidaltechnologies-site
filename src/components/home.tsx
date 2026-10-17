@@ -177,7 +177,7 @@ export function Home({ lang }: { lang: Locale }) {
             <p className="relative mx-auto mt-4 max-w-lg text-muted">{t.contact.text}</p>
             <div className="relative mt-8 flex flex-wrap justify-center gap-3">
               <a
-                href="mailto:contato@vidallabs.com.br"
+                href="mailto:contato@vidaltechnologies.com.br"
                 className="rounded-full bg-accent px-6 py-3 font-semibold text-accent-ink transition hover:brightness-110"
               >
                 {t.contact.button}
