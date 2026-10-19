@@ -1,45 +1,123 @@
+import type { ReactNode } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { LogoMark } from "@/components/logo";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 
-// Fluxo de automação no estilo n8n, em loop: cada etapa acende na sua vez,
-// pontos percorrem as ligações e as etapas concluídas ganham um check verde.
-// A animação é SVG puro (SMIL), sem JavaScript.
+// Fluxo de qualificação de leads no estilo n8n, o mesmo da apresentação:
+// o lead passa pela IA e, se qualificado, segue para WhatsApp, Gmail e
+// Google Calendar; senão, vai para o CRM e ganha um follow-up.
+// Em loop, cada etapa acende na sua vez, pontos percorrem as ligações e as
+// etapas concluídas ganham um check verde. A animação é SVG puro (SMIL).
 
-const CYCLE = "5s";
-const NODE = 56;
+
+const CYCLE = "7s";
 // Cores fixas: a animação SMIL não entende variáveis CSS.
 const LINE = "#3d3d3d";
 const ACCENT = "#fbc105";
+const MUTED = "#8a8a8a";
 
-type Step = { x: number; y: number; start: number; end: number };
+// Trecho do ciclo (0 a 1) em que cada etapa roda.
+const timing = {
+  trigger: { start: 0, end: 0.06 },
+  ai: { start: 0.14, end: 0.26 },
+  check: { start: 0.34, end: 0.4 },
+  whatsapp: { start: 0.48, end: 0.54 },
+  gmail: { start: 0.62, end: 0.68 },
+  calendar: { start: 0.76, end: 0.82 },
+  crm: { start: 0.48, end: 0.54 },
+  followup: { start: 0.62, end: 0.68 },
+};
 
-// Posições no viewBox e o trecho do ciclo (0 a 1) em que cada etapa roda.
-const steps = {
-  trigger: { x: 12, y: 112, start: 0, end: 0.1 },
-  ai: { x: 124, y: 112, start: 0.24, end: 0.42 },
-  check: { x: 236, y: 112, start: 0.54, end: 0.62 },
-  whatsapp: { x: 348, y: 36, start: 0.78, end: 0.88 },
-  crm: { x: 348, y: 188, start: 0.78, end: 0.88 },
-} satisfies Record<string, Step>;
+type StepKey = keyof typeof timing;
 
-type StepKey = keyof typeof steps;
-
-const links: { from: StepKey; to: StepKey; start: number; end: number }[] = [
-  { from: "trigger", to: "ai", start: 0.1, end: 0.24 },
-  { from: "ai", to: "check", start: 0.42, end: 0.54 },
-  { from: "check", to: "whatsapp", start: 0.62, end: 0.78 },
-  { from: "check", to: "crm", start: 0.62, end: 0.78 },
+const links: { from: StepKey; to: StepKey; start: number; end: number; nurture?: boolean }[] = [
+  { from: "trigger", to: "ai", start: 0.06, end: 0.14 },
+  { from: "ai", to: "check", start: 0.26, end: 0.34 },
+  { from: "check", to: "whatsapp", start: 0.4, end: 0.48 },
+  { from: "whatsapp", to: "gmail", start: 0.54, end: 0.62 },
+  { from: "gmail", to: "calendar", start: 0.68, end: 0.76 },
+  { from: "check", to: "crm", start: 0.4, end: 0.48, nurture: true },
+  { from: "crm", to: "followup", start: 0.54, end: 0.62, nurture: true },
 ];
 
-const linkPath = (from: Step, to: Step) => {
-  const x1 = from.x + NODE;
-  const y1 = from.y + NODE / 2;
-  const x2 = to.x;
-  const y2 = to.y + NODE / 2;
-  const mid = (x1 + x2) / 2;
-  return `M${x1} ${y1} C${mid} ${y1} ${mid} ${y2} ${x2} ${y2}`;
+type Point = { x: number; y: number };
+type Layout = {
+  width: number;
+  height: number;
+  node: number;
+  // "h": o fluxo corre da esquerda para a direita; "v": de cima para baixo.
+  direction: "h" | "v";
+  title: number;
+  text: number;
+  nodes: Record<StepKey, Point>;
+  yes: Point;
+  no: Point;
 };
+
+// No computador o fluxo corre na horizontal, como no slide da apresentação.
+const wide: Layout = {
+  width: 1090,
+  height: 340,
+  node: 76,
+  direction: "h",
+  title: 15,
+  text: 12.5,
+  nodes: {
+    trigger: { x: 34, y: 127 },
+    ai: { x: 209, y: 127 },
+    check: { x: 384, y: 127 },
+    whatsapp: { x: 604, y: 37 },
+    gmail: { x: 779, y: 37 },
+    calendar: { x: 954, y: 37 },
+    crm: { x: 604, y: 217 },
+    followup: { x: 779, y: 217 },
+  },
+  yes: { x: 516, y: 118 },
+  no: { x: 548, y: 290 },
+};
+
+// No celular ele desce na vertical e se divide em duas colunas.
+const tall: Layout = {
+  width: 360,
+  height: 800,
+  node: 60,
+  direction: "v",
+  title: 14,
+  text: 11.5,
+  nodes: {
+    trigger: { x: 150, y: 8 },
+    ai: { x: 150, y: 138 },
+    check: { x: 150, y: 268 },
+    whatsapp: { x: 60, y: 430 },
+    gmail: { x: 60, y: 560 },
+    calendar: { x: 60, y: 690 },
+    crm: { x: 240, y: 430 },
+    followup: { x: 240, y: 560 },
+  },
+  yes: { x: 72, y: 395 },
+  no: { x: 312, y: 395 },
+};
+
+const linkPath = (layout: Layout, from: Point, to: Point) => {
+  const n = layout.node;
+  if (layout.direction === "h") {
+    const [x1, y1, x2, y2] = [from.x + n, from.y + n / 2, to.x, to.y + n / 2];
+    const mid = (x1 + x2) / 2;
+    return `M${x1} ${y1} C${mid} ${y1} ${mid} ${y2} ${x2} ${y2}`;
+  }
+  // Na vertical a ligação sai de baixo da caixa e entra por cima da próxima,
+  // passando por baixo do texto da etapa.
+  const [x1, y1, x2, y2] = [from.x + n / 2, from.y + n, to.x + n / 2, to.y];
+  const mid = (y1 + y2) / 2;
+  return `M${x1} ${y1} C${x1} ${mid} ${x2} ${mid} ${x2} ${y2}`;
+};
+
+// Largura aproximada do texto de uma etapa, para o fundo atrás dele.
+const labelWidth = (layout: Layout, key: StepKey, t: Dictionary["flow"]) =>
+  Math.max(
+    t.nodes[key].title.length * layout.title * 0.6,
+    t.nodes[key].text.length * layout.text * 0.52,
+  ) + 10;
 
 // Valores animados que só mudam dentro de [start, end] do ciclo.
 const during = (start: number, end: number, off: string, on: string) => ({
@@ -52,27 +130,270 @@ const after = (end: number) => ({
   keyTimes: `0;${end};${end + 0.01};0.97;1`,
 });
 
-function Icon({ name }: { name: Exclude<StepKey, "ai" | "whatsapp"> }) {
-  const common = {
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 2,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-  };
-  switch (name) {
-    case "trigger":
-      return <path d="M14 3 6 14h6l-2 7 8-11h-6l2-7Z" {...common} />;
-    case "check":
-      return <path d="M4 12h6l4-6h6M10 12l4 6h6" {...common} />;
-    case "crm":
-      return <path d="M4 5h16v14H4ZM4 10h16M4 15h16M10 5v14" {...common} />;
+
+const stroke = {
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
+
+// Ícone de cada etapa, desenhado numa caixa de 24x24 (ou 48x48 nos logos).
+const icons: Record<StepKey, { viewBox: string; size: number; body: ReactNode }> = {
+  trigger: {
+    viewBox: "0 0 24 24",
+    size: 30,
+    body: <path d="M14 3 6 14h6l-2 7 8-11h-6l2-7Z" {...stroke} />,
+  },
+  ai: { viewBox: "0 0 318 221", size: 40, body: null },
+  check: {
+    viewBox: "0 0 24 24",
+    size: 30,
+    body: <path d="M4 12h6l4-6h6M10 12l4 6h6" {...stroke} />,
+  },
+  whatsapp: { viewBox: "0 0 24 24", size: 36, body: null },
+  // Como no n8n, nós de apps mostram o logo do próprio app.
+  gmail: {
+    viewBox: "0 0 48 48",
+    size: 38,
+    body: (
+      <>
+        <path fill="#4caf50" d="M45 16.2l-5 2.75-5 4.75V40h7c1.657 0 3-1.343 3-3V16.2z" />
+        <path fill="#1e88e5" d="M3 16.2l3.614 1.71L13 23.7V40H6c-1.657 0-3-1.343-3-3V16.2z" />
+        <path fill="#e53935" d="M35 11.2 24 19.45 13 11.2 12 17l1 6.7 11 8.25 11-8.25 1-6.7z" />
+        <path
+          fill="#c62828"
+          d="M3 12.298V16.2l10 7.5V11.2L9.876 8.859A4.3 4.3 0 0 0 7.298 8C4.924 8 3 9.924 3 12.298z"
+        />
+        <path
+          fill="#fbc02d"
+          d="M45 12.298V16.2l-10 7.5V11.2l3.124-2.341A4.3 4.3 0 0 1 40.702 8C43.076 8 45 9.924 45 12.298z"
+        />
+      </>
+    ),
+  },
+  calendar: {
+    viewBox: "0 0 48 48",
+    size: 40,
+    body: (
+      <>
+        <rect x="6" y="6" width="36" height="36" rx="5" fill="#fff" />
+        <path fill="#4285f4" d="M11 6h26v8H6v-3a5 5 0 0 1 5-5Z" />
+        <path fill="#34a853" d="M6 34h26v8H11a5 5 0 0 1-5-5Z" />
+        <path fill="#fbbc04" d="M34 14h8v20h-8Z" />
+        <path fill="#ea4335" d="M34 34h8l-8 8Z" />
+        <text
+          x="22"
+          y="31"
+          textAnchor="middle"
+          fontWeight="800"
+          fontSize="14"
+          fill="#1a73e8"
+          className="font-sans"
+        >
+          31
+        </text>
+      </>
+    ),
+  },
+  crm: {
+    viewBox: "0 0 24 24",
+    size: 30,
+    body: <path d="M4 5h16v14H4ZM4 10h16M4 15h16M10 5v14" {...stroke} />,
+  },
+  followup: {
+    viewBox: "0 0 24 24",
+    size: 30,
+    body: (
+      <>
+        <circle cx="12" cy="13" r="8" {...stroke} />
+        <path d="M12 9v4l3 2M9 2h6" {...stroke} />
+      </>
+    ),
+  },
+};
+
+function NodeIcon({ name, x, y, size }: { name: StepKey; x: number; y: number; size: number }) {
+  if (name === "ai") {
+    // A IA do fluxo é a da Vidal Technologies: o V da marca.
+    return <LogoMark x={x} y={y} width={size} height={size} className="text-accent" />;
   }
+  if (name === "whatsapp") {
+    return <WhatsAppIcon x={x} y={y} width={size} height={size} className="fill-[#25D366]" />;
+  }
+  const icon = icons[name];
+  return (
+    <svg x={x} y={y} width={size} height={size} viewBox={icon.viewBox} className="text-foreground">
+      {icon.body}
+    </svg>
+  );
+}
+
+// Versão em lista para telas estreitas, onde o diagrama ficaria pequeno demais.
+
+function FlowDiagram({
+  t,
+  layout,
+  label,
+  className,
+}: {
+  t: Dictionary["flow"];
+  layout: Layout;
+  label: string;
+  className: string;
+}) {
+  const { width, height, node: n } = layout;
+  const grid = `flow-grid-${layout.direction}`;
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={label} className={className}>
+      <defs>
+        <pattern id={grid} width="18" height="18" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="1" fill="var(--line)" opacity="0.5" />
+        </pattern>
+      </defs>
+      <rect width={width} height={height} fill={`url(#${grid})`} />
+
+      {links.map((link) => {
+        const d = linkPath(layout, layout.nodes[link.from], layout.nodes[link.to]);
+        const on = link.nurture ? MUTED : ACCENT;
+        return (
+          <g key={`${link.from}-${link.to}`}>
+            <path d={d} fill="none" stroke={LINE} strokeWidth="2">
+              <animate
+                attributeName="stroke"
+                dur={CYCLE}
+                repeatCount="indefinite"
+                {...during(link.start, link.end, LINE, on)}
+              />
+            </path>
+            <circle r="4.5" fill={on} opacity="0">
+              <animateMotion
+                path={d}
+                dur={CYCLE}
+                repeatCount="indefinite"
+                calcMode="linear"
+                keyPoints="0;0;1;1"
+                keyTimes={`0;${link.start};${link.end};1`}
+              />
+              <animate
+                attributeName="opacity"
+                dur={CYCLE}
+                repeatCount="indefinite"
+                {...during(link.start, link.end, "0", "1")}
+              />
+            </circle>
+          </g>
+        );
+      })}
+
+      <text
+        x={layout.yes.x}
+        y={layout.yes.y}
+        textAnchor="middle"
+        fill="#3ddc84"
+        fontSize="13"
+        className="font-mono"
+      >
+        {t.branches.yes}
+      </text>
+      <text
+        x={layout.no.x}
+        y={layout.no.y}
+        textAnchor="middle"
+        fill={MUTED}
+        fontSize="13"
+        className="font-mono"
+      >
+        {t.branches.no}
+      </text>
+
+      {(Object.keys(timing) as StepKey[]).map((key) => {
+        const { x, y } = layout.nodes[key];
+        const { start, end } = timing[key];
+        const size = (icons[key].size * n) / 76;
+        return (
+          <g key={key}>
+            <rect
+              x={x}
+              y={y}
+              width={n}
+              height={n}
+              // No n8n o nó de gatilho é mais arredondado que os outros.
+              rx={key === "trigger" ? n / 3 : n / 6}
+              fill="var(--surface-2)"
+              stroke={key === "ai" ? ACCENT : LINE}
+              strokeWidth="2"
+            >
+              <animate
+                attributeName="stroke"
+                dur={CYCLE}
+                repeatCount="indefinite"
+                {...during(start, end, key === "ai" ? ACCENT : LINE, ACCENT)}
+              />
+            </rect>
+            <NodeIcon name={key} x={x + (n - size) / 2} y={y + (n - size) / 2} size={size} />
+            <g opacity="0">
+              <circle cx={x + n - 3} cy={y + 3} r="9" fill="#3ddc84" />
+              <path
+                d={`M${x + n - 7.5} ${y + 3}l3 3 5.5-6`}
+                fill="none"
+                stroke="#000"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <animate attributeName="opacity" dur={CYCLE} repeatCount="indefinite" {...after(end)} />
+            </g>
+            {layout.direction === "v" && (
+              // Na vertical as ligações passam por baixo dos textos; o fundo
+              // atrás do texto mantém a leitura limpa.
+              <rect
+                x={x + n / 2 - labelWidth(layout, key, t) / 2}
+                y={y + n + 4}
+                width={labelWidth(layout, key, t)}
+                height={layout.title + layout.text + 12}
+                rx="4"
+                fill="var(--surface)"
+              />
+            )}
+            <text
+              x={x + n / 2}
+              y={y + n + layout.title + 6}
+              textAnchor="middle"
+              fill="var(--foreground)"
+              fontSize={layout.title}
+              fontWeight="700"
+            >
+              {t.nodes[key].title}
+            </text>
+            <text
+              x={x + n / 2}
+              y={y + n + layout.title + layout.text + 10}
+              textAnchor="middle"
+              fill="var(--muted)"
+              fontSize={layout.text}
+            >
+              {t.nodes[key].text}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
 }
 
 export function AutomationFlow({ t }: { t: Dictionary["flow"] }) {
+  const label = [
+    t.nodes.trigger.title,
+    t.nodes.ai.title,
+    t.nodes.check.title,
+    `${t.branches.yes}: ${[t.nodes.whatsapp, t.nodes.gmail, t.nodes.calendar].map((n) => n.title).join(", ")}`,
+    `${t.branches.no}: ${[t.nodes.crm, t.nodes.followup].map((n) => n.title).join(", ")}`,
+  ].join(" → ");
+
   return (
-    <div className="self-end rounded-2xl border border-line bg-surface p-5">
+    <div className="rounded-2xl border border-line bg-surface p-5">
       <div className="mb-3 flex items-center justify-between font-mono text-xs">
         <div className="flex items-center gap-3">
           <div className="flex gap-1.5" aria-hidden>
@@ -88,117 +409,8 @@ export function AutomationFlow({ t }: { t: Dictionary["flow"] }) {
         </span>
       </div>
 
-      <svg
-        viewBox="0 0 416 270"
-        role="img"
-        aria-label={Object.values(t.nodes).join(" → ").replaceAll("\n", " ")}
-        className="w-full"
-      >
-        <defs>
-          <pattern id="flow-grid" width="16" height="16" patternUnits="userSpaceOnUse">
-            <circle cx="1" cy="1" r="1" fill="var(--line)" opacity="0.5" />
-          </pattern>
-        </defs>
-        <rect width="416" height="270" fill="url(#flow-grid)" />
-
-        {links.map((link) => {
-          const d = linkPath(steps[link.from], steps[link.to]);
-          const active = during(link.start, link.end, LINE, ACCENT);
-          return (
-            <g key={`${link.from}-${link.to}`}>
-              <path d={d} fill="none" stroke={LINE} strokeWidth="2">
-                <animate attributeName="stroke" dur={CYCLE} repeatCount="indefinite" {...active} />
-              </path>
-              <circle r="4" fill={ACCENT} opacity="0">
-                <animateMotion
-                  path={d}
-                  dur={CYCLE}
-                  repeatCount="indefinite"
-                  calcMode="linear"
-                  keyPoints="0;0;1;1"
-                  keyTimes={`0;${link.start};${link.end};1`}
-                />
-                <animate
-                  attributeName="opacity"
-                  dur={CYCLE}
-                  repeatCount="indefinite"
-                  {...during(link.start, link.end, "0", "1")}
-                />
-              </circle>
-            </g>
-          );
-        })}
-
-        {(Object.keys(steps) as StepKey[]).map((key) => {
-          const { x, y, start, end } = steps[key];
-          const isTrigger = key === "trigger";
-          return (
-            <g key={key}>
-              <rect
-                x={x}
-                y={y}
-                width={NODE}
-                height={NODE}
-                // No n8n o nó de gatilho é mais arredondado que os outros.
-                rx={isTrigger ? 20 : 10}
-                fill="var(--surface-2)"
-                stroke={LINE}
-                strokeWidth="2"
-              >
-                <animate
-                  attributeName="stroke"
-                  dur={CYCLE}
-                  repeatCount="indefinite"
-                  {...during(start, end, LINE, ACCENT)}
-                />
-              </rect>
-              {key === "ai" ? (
-                // A IA do fluxo é a da Vidal Technologies: o V da marca.
-                <LogoMark x={x + 12} y={y + 18} width="32" height="22" className="text-accent" />
-              ) : key === "whatsapp" ? (
-                // Como no n8n, nós de apps mostram o logo do próprio app.
-                <WhatsAppIcon x={x + 14} y={y + 14} width="28" height="28" className="fill-[#25D366]" />
-              ) : (
-                <svg
-                  x={x + 16}
-                  y={y + 16}
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  className="text-foreground"
-                >
-                  <Icon name={key} />
-                </svg>
-              )}
-              <g opacity="0">
-                <circle cx={x + NODE - 2} cy={y + 2} r="8" fill="#3ddc84" />
-                <path
-                  d={`M${x + NODE - 6} ${y + 2}l3 3 5-6`}
-                  fill="none"
-                  stroke="#000"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <animate attributeName="opacity" dur={CYCLE} repeatCount="indefinite" {...after(end)} />
-              </g>
-              <text
-                x={x + NODE / 2}
-                y={y + NODE + 18}
-                textAnchor="middle"
-                fill="var(--muted)"
-                fontSize="12"
-              >
-                {t.nodes[key].split("\n").map((line, i) => (
-                  <tspan key={line} x={x + NODE / 2} dy={i === 0 ? 0 : 15}>
-                    {line}
-                  </tspan>
-                ))}
-              </text>
-            </g>
-          );
-        })}
-      </svg>
+      <FlowDiagram t={t} layout={tall} label={label} className="mx-auto w-full max-w-sm md:hidden" />
+      <FlowDiagram t={t} layout={wide} label={label} className="hidden w-full md:block" />
 
       <p className="mt-2 font-mono text-xs text-subtle">{t.footer}</p>
     </div>
