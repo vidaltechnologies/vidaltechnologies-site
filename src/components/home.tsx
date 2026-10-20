@@ -6,7 +6,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { dictionaries, htmlLang, localePath, type Locale } from "@/i18n/dictionaries";
 
 // Link do botão "Ver no GitHub" da seção Projetos.
-const GITHUB_URL = "https://github.com/thiagovidalpassos";
+const GITHUB_URL = "https://github.com/vidaltechnologies";
 
 export function Home({ lang }: { lang: Locale }) {
   const t = dictionaries[lang];
