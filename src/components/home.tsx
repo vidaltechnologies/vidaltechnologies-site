@@ -46,7 +46,7 @@ export function Home({ lang }: { lang: Locale }) {
             aria-hidden
             className="pointer-events-none absolute -top-40 right-[-10%] h-[520px] w-[520px] rounded-full bg-accent/20 blur-[140px]"
           />
-          <div className="relative mx-auto flex max-w-6xl flex-col gap-14 px-4 py-24 sm:px-6 md:py-28">
+          <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-24 sm:px-6 md:py-28 lg:grid-cols-[1fr_1.15fr]">
             <div className="flex flex-col gap-8">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
                 {t.hero.eyebrow}
