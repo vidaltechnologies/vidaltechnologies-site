@@ -4,8 +4,9 @@ import { LogoMark } from "@/components/logo";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 
 // Fluxo de qualificação de leads no estilo n8n, o mesmo da apresentação:
-// o lead passa pela IA e, se qualificado, segue para WhatsApp, Gmail e
-// Google Calendar; senão, vai para o CRM e ganha um follow-up.
+// o lead passa pela IA e, se qualificado, recebe resposta no WhatsApp e
+// segue em paralelo para Gmail e Google Calendar; senão, vai para o CRM e
+// ganha um follow-up.
 // Em loop, cada etapa acende na sua vez, pontos percorrem as ligações e as
 // etapas concluídas ganham um check verde. A animação é SVG puro (SMIL).
 
@@ -23,7 +24,7 @@ const timing = {
   check: { start: 0.34, end: 0.4 },
   whatsapp: { start: 0.48, end: 0.54 },
   gmail: { start: 0.62, end: 0.68 },
-  calendar: { start: 0.76, end: 0.82 },
+  calendar: { start: 0.62, end: 0.68 },
   crm: { start: 0.48, end: 0.54 },
   followup: { start: 0.62, end: 0.68 },
 };
@@ -35,7 +36,7 @@ const links: { from: StepKey; to: StepKey; start: number; end: number; nurture?:
   { from: "ai", to: "check", start: 0.26, end: 0.34 },
   { from: "check", to: "whatsapp", start: 0.4, end: 0.48 },
   { from: "whatsapp", to: "gmail", start: 0.54, end: 0.62 },
-  { from: "gmail", to: "calendar", start: 0.68, end: 0.76 },
+  { from: "whatsapp", to: "calendar", start: 0.54, end: 0.62 },
   { from: "check", to: "crm", start: 0.4, end: 0.48, nurture: true },
   { from: "crm", to: "followup", start: 0.54, end: 0.62, nurture: true },
 ];
@@ -54,26 +55,26 @@ type Layout = {
   no: Point;
 };
 
-// No computador o fluxo corre na horizontal, como no slide da apresentação.
+// No computador o fluxo corre na horizontal, ao lado do título.
 const wide: Layout = {
-  width: 1090,
-  height: 340,
-  node: 76,
+  width: 660,
+  height: 345,
+  node: 56,
   direction: "h",
-  title: 15,
-  text: 12.5,
+  title: 11.5,
+  text: 10.5,
   nodes: {
-    trigger: { x: 34, y: 127 },
-    ai: { x: 209, y: 127 },
-    check: { x: 384, y: 127 },
-    whatsapp: { x: 604, y: 37 },
-    gmail: { x: 779, y: 37 },
-    calendar: { x: 954, y: 37 },
-    crm: { x: 604, y: 217 },
-    followup: { x: 779, y: 217 },
+    trigger: { x: 20, y: 130 },
+    ai: { x: 155, y: 130 },
+    check: { x: 290, y: 130 },
+    whatsapp: { x: 425, y: 70 },
+    gmail: { x: 560, y: 14 },
+    calendar: { x: 560, y: 130 },
+    crm: { x: 425, y: 250 },
+    followup: { x: 560, y: 250 },
   },
-  yes: { x: 516, y: 118 },
-  no: { x: 548, y: 290 },
+  yes: { x: 380, y: 106 },
+  no: { x: 360, y: 290 },
 };
 
 // No celular ele desce na vertical e se divide em duas colunas.
@@ -89,8 +90,8 @@ const tall: Layout = {
     ai: { x: 150, y: 138 },
     check: { x: 150, y: 268 },
     whatsapp: { x: 60, y: 430 },
-    gmail: { x: 60, y: 560 },
-    calendar: { x: 60, y: 690 },
+    gmail: { x: 40, y: 560 },
+    calendar: { x: 140, y: 690 },
     crm: { x: 240, y: 430 },
     followup: { x: 240, y: 560 },
   },
