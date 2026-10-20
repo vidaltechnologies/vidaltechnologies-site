@@ -1,35 +1,26 @@
 # Vidal Technologies — site
 
-Site institucional da Vidal Technologies, com área pública e painel de postagem.
+Site institucional da Vidal Technologies, em português, inglês e espanhol.
 
-**Stack:** Next.js (TypeScript, App Router) · Tailwind CSS · Supabase (banco, login e armazenamento) · Vercel (hospedagem).
+**Stack:** Next.js (TypeScript, App Router) · Tailwind CSS.
 
 ## Rodando localmente
 
-1. Crie um projeto em [supabase.com](https://supabase.com) (plano gratuito).
-2. Copie `.env.example` para `.env.local` e preencha com a URL e a chave publicável
-   do projeto (Project Settings › API).
-3. No Supabase, em Authentication › Users, crie o seu usuário com e-mail e senha.
-4. Instale e rode:
+```bash
+npm install
+npm run dev
+```
 
-   ```bash
-   npm install
-   npm run dev
-   ```
-
-5. Abra http://localhost:3000. O painel fica em `/admin` e pede login em `/login`.
+Abra http://localhost:3000. As versões em inglês e espanhol ficam em `/en` e `/es`.
 
 ## Estrutura
 
-- `src/app/page.tsx`: página inicial pública.
-- `src/app/login/`: tela de login e ações de entrar e sair.
-- `src/app/admin/`: painel protegido, onde vão ficar as postagens.
-- `src/lib/supabase/`: clientes do Supabase para navegador, servidor e proxy.
-- `src/proxy.ts`: renova a sessão a cada requisição e redireciona `/admin` para o login.
+- `src/app/page.tsx` e `src/app/[lang]/page.tsx`: página inicial em cada idioma.
+- `src/components/home.tsx`: seções da página (início, serviços, projetos, sobre, contato).
+- `src/components/automation-flow.tsx`: fluxo animado no estilo n8n.
+- `src/i18n/dictionaries.ts`: todos os textos do site, nos três idiomas.
 
 ## Publicando
 
-1. Na [Vercel](https://vercel.com), importe este repositório do GitHub.
-2. Cadastre as mesmas variáveis do `.env.local` em Settings › Environment Variables.
-3. Em Settings › Domains, adicione `vidaltechnologies.com.br`. A Vercel mostra os
-   registros de DNS para cadastrar no painel da Hostinger, onde o domínio continua registrado.
+O site não usa banco de dados nem login, então pode ser publicado como arquivos
+estáticos (por exemplo, na hospedagem da Hostinger) ou na Vercel.
