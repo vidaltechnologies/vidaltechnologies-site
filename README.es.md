@@ -145,18 +145,6 @@ docs/
 └── screenshots/            # Imágenes usadas en este README
 ```
 
-## Publicación
-
-El sitio está alojado en Hostinger como archivos estáticos: el resultado del build se
-sube a la carpeta `public_html` del dominio. Como no hay base de datos, también puede
-publicarse en servicios como Vercel o Netlify sin cambios.
-
-## Contacto
-
-- Correo: [contato@vidaltechnologies.com.br](mailto:contato@vidaltechnologies.com.br)
-- WhatsApp: [+55 41 98877-9179](https://wa.me/5541988779179)
-- GitHub: [github.com/vidaltechnologies](https://github.com/vidaltechnologies)
-
 ---
 
 © Vidal Technologies. Todos los derechos reservados.

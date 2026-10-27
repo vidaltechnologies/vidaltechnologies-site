@@ -143,18 +143,6 @@ docs/
 └── screenshots/            # Images used in this README
 ```
 
-## Deployment
-
-The site is hosted on Hostinger as static files: the build output is uploaded to the
-domain's `public_html` folder. Since there is no database, it can also be deployed to
-services such as Vercel or Netlify without changes.
-
-## Contact
-
-- Email: [contato@vidaltechnologies.com.br](mailto:contato@vidaltechnologies.com.br)
-- WhatsApp: [+55 41 98877-9179](https://wa.me/5541988779179)
-- GitHub: [github.com/vidaltechnologies](https://github.com/vidaltechnologies)
-
 ---
 
 © Vidal Technologies. All rights reserved.
