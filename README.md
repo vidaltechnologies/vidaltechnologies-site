@@ -10,6 +10,10 @@
 </p>
 
 <p align="center">
+  <strong>Português</strong> · <a href="README.en.md">English</a> · <a href="README.es.md">Español</a>
+</p>
+
+<p align="center">
   <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white" />
   <img alt="React" src="https://img.shields.io/badge/React-19-20232A?logo=react&logoColor=61DAFB" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white" />
