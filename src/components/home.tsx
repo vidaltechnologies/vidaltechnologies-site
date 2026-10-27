@@ -79,24 +79,15 @@ export function Home({ lang }: { lang: Locale }) {
 
         <section id="servicos" className="mx-auto max-w-6xl scroll-mt-16 px-4 py-24 sm:px-6">
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t.services.title}</h2>
-          <div className="mt-12 flex flex-col gap-20">
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
             {t.services.items.map((s, i) => (
-              <div key={s.title} className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-12">
-                <div className="flex flex-col gap-4">
+              <div key={s.title} className="flex flex-col gap-5 rounded-2xl border border-line/60 bg-surface p-6">
+                <div className="flex flex-col gap-3">
                   <span className="font-mono text-sm text-accent">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">{s.title}</h3>
-                  <p className="leading-relaxed text-muted">{s.text}</p>
-                  <div className="mt-2 border-t border-line/60 pt-4">
-                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-subtle">{t.services.ideal}</p>
-                    <p className="mt-2 text-sm leading-relaxed">{s.ideal}</p>
-                  </div>
+                  <h3 className="text-xl font-semibold tracking-tight">{s.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted">{s.text}</p>
                 </div>
-                <div className="flex min-w-0 flex-col gap-4">
-                  <ServiceCarousel examples={s.examples} labels={t.services.carousel} />
-                  <p className="rounded-xl border border-dashed border-line px-4 py-3 text-sm leading-relaxed text-muted">
-                    <span className="font-semibold text-accent">{s.note.label}</span> {s.note.text}
-                  </p>
-                </div>
+                <ServiceCarousel examples={s.examples} labels={t.services.carousel} delay={i * 1500} />
               </div>
             ))}
           </div>

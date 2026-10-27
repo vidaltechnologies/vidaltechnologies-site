@@ -1,159 +1,88 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 type Services = Dictionary["services"];
 type Example = Services["items"][number]["examples"][number];
 
-// Tempo que cada exemplo fica parado antes de passar para o próximo.
+// Tempo que cada exemplo fica na tela antes de dar lugar ao próximo.
 const INTERVAL = 4500;
-// Depois de um toque ou clique, espera um pouco antes de voltar a girar sozinho.
-const RESUME_AFTER = 8000;
 
-// Carrossel horizontal dos exemplos de um serviço. Passa sozinho para o
-// próximo card, para quando o visitante passa o mouse ou mexe nele e não
-// anda sozinho para quem pediu menos movimento no sistema.
-export function ServiceCarousel({ examples, labels }: { examples: Example[]; labels: Services["carousel"] }) {
-  const track = useRef<HTMLDivElement>(null);
-  const resumeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
-  // Posições de rolagem onde o carrossel pode parar. Com dois cards visíveis,
-  // são menos paradas que cards.
-  const [stops, setStops] = useState<number[]>([0]);
+// Mostra um exemplo por vez dentro da coluna do serviço e troca sozinho.
+// Cada coluna começa com um atraso diferente para as três não trocarem juntas.
+// Para quando o visitante passa o mouse e não anda sozinho para quem pediu
+// menos movimento no sistema.
+export function ServiceCarousel({
+  examples,
+  labels,
+  delay = 0,
+}: {
+  examples: Example[];
+  labels: Services["carousel"];
+  delay?: number;
+}) {
   const [active, setActive] = useState(0);
-  const [hovered, setHovered] = useState(false);
-  const [held, setHeld] = useState(false);
+  const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-
-  const measure = useCallback(() => {
-    const el = track.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    const positions = Array.from(el.children, (card) => Math.min((card as HTMLElement).offsetLeft, max));
-    setStops(positions.filter((p, i) => i === 0 || p - positions[i - 1] > 4));
-  }, []);
+  const firstTurn = useRef(true);
 
   useEffect(() => {
-    measure();
-    window.addEventListener("resize", measure);
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onMotion = () => setReducedMotion(media.matches);
     onMotion();
     media.addEventListener("change", onMotion);
-    return () => {
-      window.removeEventListener("resize", measure);
-      media.removeEventListener("change", onMotion);
-      clearTimeout(resumeTimer.current);
-    };
-  }, [measure]);
-
-  const goTo = useCallback(
-    (index: number) => {
-      track.current?.scrollTo({ left: stops[index] ?? 0, behavior: "smooth" });
-    },
-    [stops],
-  );
-
-  const onScroll = () => {
-    const el = track.current;
-    if (!el) return;
-    let nearest = 0;
-    stops.forEach((p, i) => {
-      if (Math.abs(p - el.scrollLeft) < Math.abs(stops[nearest] - el.scrollLeft)) nearest = i;
-    });
-    setActive(nearest);
-  };
-
-  const hold = () => {
-    setHeld(true);
-    clearTimeout(resumeTimer.current);
-    resumeTimer.current = setTimeout(() => setHeld(false), RESUME_AFTER);
-  };
+    return () => media.removeEventListener("change", onMotion);
+  }, []);
 
   useEffect(() => {
-    if (hovered || held || reducedMotion || stops.length < 2) return;
-    const timer = setInterval(() => goTo((active + 1) % stops.length), INTERVAL);
-    return () => clearInterval(timer);
-  }, [active, goTo, held, hovered, reducedMotion, stops.length]);
-
-  const step = (delta: number) => {
-    hold();
-    goTo((active + delta + stops.length) % stops.length);
-  };
+    if (paused || reducedMotion || examples.length < 2) return;
+    // Um timer por troca: clicar numa bolinha recomeça a contagem.
+    const wait = firstTurn.current ? INTERVAL + delay : INTERVAL;
+    const timer = setTimeout(() => {
+      firstTurn.current = false;
+      setActive((a) => (a + 1) % examples.length);
+    }, wait);
+    return () => clearTimeout(timer);
+  }, [active, delay, examples.length, paused, reducedMotion]);
 
   return (
-    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocusCapture={hold}>
-      <div
-        ref={track}
-        onScroll={onScroll}
-        onPointerDown={hold}
-        onWheel={hold}
-        className="no-scrollbar relative flex snap-x snap-mandatory gap-4 overflow-x-auto"
-      >
-        {examples.map((example) => (
-          <article
+    <div
+      className="flex flex-1 flex-col"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
+      {/* Todos os exemplos ocupam a mesma célula, então a altura é a do maior e nada pula. */}
+      <div className="grid flex-1 overflow-hidden">
+        {examples.map((example, i) => (
+          <div
             key={example.code}
-            className="flex shrink-0 basis-[85%] snap-start flex-col gap-3 rounded-2xl border border-line/60 bg-surface-2 p-6 sm:basis-[calc(50%-0.5rem)]"
+            aria-hidden={i !== active}
+            className={`col-start-1 row-start-1 flex flex-col gap-2 rounded-xl bg-surface-2 p-5 transition-all duration-500 ${
+              i === active ? "translate-x-0 opacity-100" : i < active ? "-translate-x-6 opacity-0" : "translate-x-6 opacity-0"
+            }`}
           >
             <span className="font-mono text-xs font-semibold text-accent">{example.code}</span>
-            <h4 className="text-lg font-semibold">{example.title}</h4>
-            <p className="leading-relaxed text-muted">{example.text}</p>
-            <ul className="mt-auto flex flex-wrap gap-2 pt-2">
-              {example.tags.map((tag) => (
-                <li key={tag} className="rounded-full border border-line px-3 py-1 text-xs text-muted">
-                  {tag}
-                </li>
-              ))}
-            </ul>
-          </article>
+            <h4 className="font-semibold">{example.title}</h4>
+            <p className="text-sm leading-relaxed text-muted">{example.text}</p>
+          </div>
         ))}
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-4">
-        <div className="flex gap-2">
-          {stops.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              aria-label={`${labels.goTo} ${i + 1}`}
-              aria-current={i === active}
-              onClick={() => {
-                hold();
-                goTo(i);
-              }}
-              className={`h-2 rounded-full transition-all ${i === active ? "w-6 bg-accent" : "w-2 bg-line hover:bg-subtle"}`}
-            />
-          ))}
-        </div>
-        <div className="flex gap-2">
-          <ArrowButton label={labels.prev} onClick={() => step(-1)} flip />
-          <ArrowButton label={labels.next} onClick={() => step(1)} />
-        </div>
+      <div className="mt-4 flex gap-2">
+        {examples.map((example, i) => (
+          <button
+            key={example.code}
+            type="button"
+            aria-label={`${labels.goTo} ${example.code}`}
+            aria-current={i === active}
+            onClick={() => setActive(i)}
+            className={`h-1.5 rounded-full transition-all ${i === active ? "w-6 bg-accent" : "w-1.5 bg-line hover:bg-subtle"}`}
+          />
+        ))}
       </div>
     </div>
-  );
-}
-
-function ArrowButton({ label, onClick, flip }: { label: string; onClick: () => void; flip?: boolean }) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      onClick={onClick}
-      className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-foreground transition hover:border-accent hover:text-accent"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden
-        className={`h-4 w-4 ${flip ? "rotate-180" : ""}`}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M5 12h14M13 6l6 6-6 6" />
-      </svg>
-    </button>
   );
 }
