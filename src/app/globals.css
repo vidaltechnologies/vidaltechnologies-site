@@ -42,3 +42,12 @@ body {
   background: var(--accent);
   color: var(--accent-ink);
 }
+
+/* Esconde a barra de rolagem dos carrosséis, que continuam roláveis. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -3,6 +3,7 @@ import { AutomationFlow } from "@/components/automation-flow";
 import { Logo } from "@/components/logo";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ServiceCarousel } from "@/components/service-carousel";
 import { dictionaries, htmlLang, localePath, type Locale } from "@/i18n/dictionaries";
 
 // Link do botão "Ver no GitHub" da seção Projetos.
@@ -78,23 +79,25 @@ export function Home({ lang }: { lang: Locale }) {
 
         <section id="servicos" className="mx-auto max-w-6xl scroll-mt-16 px-4 py-24 sm:px-6">
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t.services.title}</h2>
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {t.services.items.map((s) => (
-              <article
-                key={s.title}
-                className="flex flex-col gap-3 rounded-2xl border border-line/60 bg-surface-2 p-6 transition hover:border-accent/60"
-              >
-                <h3 className="text-xl font-semibold text-accent">{s.title}</h3>
-                <p className="leading-relaxed text-muted">{s.text}</p>
-                <ul className="mt-2 flex flex-col gap-2 text-sm text-foreground">
-                  {s.examples.map((example) => (
-                    <li key={example} className="flex gap-2.5">
-                      <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                      {example}
-                    </li>
-                  ))}
-                </ul>
-              </article>
+          <div className="mt-12 flex flex-col gap-20">
+            {t.services.items.map((s, i) => (
+              <div key={s.title} className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-12">
+                <div className="flex flex-col gap-4">
+                  <span className="font-mono text-sm text-accent">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">{s.title}</h3>
+                  <p className="leading-relaxed text-muted">{s.text}</p>
+                  <div className="mt-2 border-t border-line/60 pt-4">
+                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-subtle">{t.services.ideal}</p>
+                    <p className="mt-2 text-sm leading-relaxed">{s.ideal}</p>
+                  </div>
+                </div>
+                <div className="flex min-w-0 flex-col gap-4">
+                  <ServiceCarousel examples={s.examples} labels={t.services.carousel} />
+                  <p className="rounded-xl border border-dashed border-line px-4 py-3 text-sm leading-relaxed text-muted">
+                    <span className="font-semibold text-accent">{s.note.label}</span> {s.note.text}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
         </section>
