@@ -142,18 +142,6 @@ docs/
 └── screenshots/            # Imagens usadas neste README
 ```
 
-## Publicação
-
-O site é publicado na hospedagem da Hostinger como arquivos estáticos: o resultado do
-build é enviado para a pasta `public_html` do domínio. Como não há banco de dados,
-também pode ser publicado em serviços como Vercel ou Netlify sem mudanças.
-
-## Contato
-
-- E-mail: [contato@vidaltechnologies.com.br](mailto:contato@vidaltechnologies.com.br)
-- WhatsApp: [+55 41 98877-9179](https://wa.me/5541988779179)
-- GitHub: [github.com/vidaltechnologies](https://github.com/vidaltechnologies)
-
 ---
 
 © Vidal Technologies. Todos os direitos reservados.
